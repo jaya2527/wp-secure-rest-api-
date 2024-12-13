@@ -32,3 +32,30 @@ function jwtCustomApi()
     return WSR::getInstance();
 }
 $GLOBALS['WSR'] = jwtCustomApi();
+
+function custom_register_enquiry_post_type()
+{
+    register_post_type('book',
+        array(
+            'labels' => array(
+                'name' => __('Books'),
+                'singular_name' => __('Book'),
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'supports' => array('title', 'editor', 'author'),
+        )
+    );
+
+
+    register_taxonomy(
+        'book_tax',
+        'book',
+        array(
+            'label' => __('Book Categories'),
+            'rewrite' => array('slug' => 'book' ),
+
+        )
+    );
+}
+add_action('init', 'custom_register_enquiry_post_type');
